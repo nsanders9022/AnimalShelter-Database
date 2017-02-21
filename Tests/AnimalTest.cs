@@ -14,7 +14,7 @@ namespace AnimalShelter
         }
 
         [Fact]
-        public void Test_EqualOverrideTrueForSameDescription()
+        public void Equals_TestIfEqual_true()
         {
           //Arrange, Act
           Animal firstAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
@@ -22,6 +22,22 @@ namespace AnimalShelter
 
           //Assert
           Assert.Equal(firstAnimal, secondAnimal);
+        }
+
+        [Fact]
+        public void Save_TestIfSaved_true()
+        {
+          //Arrange
+          Animal firstAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
+          firstAnimal.Save();
+
+          //Act
+          List<Animal> result = Animal.GetAll();
+          List<Animal> testAnimalList = new List<Animal> {firstAnimal};
+
+
+          //Assert
+          Assert.Equal(testAnimalList, result);
         }
 
         [Fact]
