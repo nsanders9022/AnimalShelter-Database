@@ -14,6 +14,17 @@ namespace AnimalShelter
         }
 
         [Fact]
+        public void Test_EqualOverrideTrueForSameDescription()
+        {
+          //Arrange, Act
+          Animal firstAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
+          Animal secondAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
+
+          //Assert
+          Assert.Equal(firstAnimal, secondAnimal);
+        }
+
+        [Fact]
         public void GetAll_ReturnAll_ListAll()
         {
             Animal firstAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
