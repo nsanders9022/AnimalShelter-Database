@@ -53,6 +53,23 @@ namespace AnimalShelter
             Assert.Equal(testAnimalList, resultAnimalList);
         }
 
+        [Fact]
+        public void GetId_TestIfCanGetId_true()
+        {
+          //Arrange
+          Animal testAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
+          testAnimal.Save();
+
+          //Act
+          Animal savedAnimal = Animal.GetAll()[0];
+
+          int result = savedAnimal.GetId();
+          int testId = testAnimal.GetId();
+
+          //Assert
+          Assert.Equal(testId, result);
+        }
+
         public void Dispose()
         {
             Animal.DeleteAll();
