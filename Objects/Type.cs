@@ -96,6 +96,39 @@ namespace AnimalShelter
             }
         }
 
+        public static Type Find(int id)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM type WHERE id = @TypeId;", conn);
+            SqlParameter typeIdParameter = new SqlParameter();
+            typeIdParameter.ParameterName = "@TypeId";
+            typeIdParameter.Value = id.ToString();
+            cmd.Parameters.Add(typeIdParameter);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            int foundTypeId = 0;
+            string foundTypeName = null;
+
+            while(rdr.Read())
+            {
+                foundTypeId = rdr.GetInt32(0);
+                foundTypeName = rdr.GetString(1);
+            }
+            Type foundType = new Type(foundTypeName, foundTypeId);
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+            return foundType;
+        }
+
         public static void DeleteAll()
         {
             SqlConnection conn = DB.Connection();

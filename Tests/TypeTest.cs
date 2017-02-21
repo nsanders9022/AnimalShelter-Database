@@ -61,6 +61,20 @@ namespace AnimalShelter
             Assert.Equal(testId, result);
         }
 
+        [Fact]
+        public void Find_FindsCategoryInDatabase_true()
+        {
+            //Arrange
+            Type testType = new Type("Cat");
+            testType.Save();
+
+            //Act
+            Type foundType = Type.Find(testType.GetId());
+
+            //Assert
+            Assert.Equal(testType, foundType);
+        }
+
 
 
         public void Dispose()
