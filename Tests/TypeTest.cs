@@ -22,7 +22,7 @@ namespace AnimalShelter
         }
 
         [Fact]
-        public void Test_Equal_ReturnsTrueForSameName()
+        public void Equals_ReturnsTrueForSameName_true()
         {
             //Arrange, Act
             Type firstType = new Type("Dog");
@@ -30,6 +30,18 @@ namespace AnimalShelter
 
             //Assert
             Assert.Equal(firstType, secondType);
+        }
+
+        [Fact]
+        public void Save_TestIfTypeSaved_true()
+        {
+            Type testType = new Type("Dog");
+            testType.Save();
+
+            List<Type> result = Type.GetAll();
+            List<Type> testList = new List<Type>{testType};
+
+            Assert.Equal(testList, result);
         }
 
 
