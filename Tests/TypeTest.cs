@@ -44,7 +44,22 @@ namespace AnimalShelter
             Assert.Equal(testList, result);
         }
 
+        [Fact]
+        public void GetId_GetsIdForType_true()
+        {
+            //Arrange
+            Type testType = new Type("Cat");
+            testType.Save();
 
+            //Act
+            Type savedType = Type.GetAll()[0];
+
+            int result = savedType.GetId();
+            int testId = testType.GetId();
+
+            //Assert
+            Assert.Equal(testId, result);
+        }
 
 
 
