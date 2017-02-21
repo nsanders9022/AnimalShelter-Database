@@ -70,6 +70,18 @@ namespace AnimalShelter
           Assert.Equal(testId, result);
         }
 
+        [Fact]
+        public void Find_FindAnimalById_true()
+        {
+            Animal testAnimal = new Animal("mr. snuggles", "male", "2017-02-12", "english bulldog", 1);
+            testAnimal.Save();
+
+            Animal foundAnimal = Animal.Find(testAnimal.GetId());
+            Console.WriteLine("foundANimal= " + foundAnimal.GetName() + " " + foundAnimal.GetId());
+            Console.WriteLine("testAnimal= " + testAnimal.GetName() + " " + testAnimal.GetId());
+            Assert.Equal(testAnimal, foundAnimal);
+        }
+
         public void Dispose()
         {
             Animal.DeleteAll();

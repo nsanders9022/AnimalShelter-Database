@@ -111,9 +111,9 @@ namespace AnimalShelter
 
             SqlCommand cmd = new SqlCommand("INSERT INTO animal (name, gender, date, breed, type_id) OUTPUT INSERTED.id VALUES (@AnimalName, @AnimalGender, @AnimalDate, @AnimalBreed, @AnimalTypeId);", conn);
 
-            SqlParameter nameParameter = new SqlParameter();
-            nameParameter.ParameterName = "@AnimalName";
-            nameParameter.Value = this.GetName();
+            SqlParameter nameParameter = new SqlParameter("@AnimalName", this.GetName());
+            // nameParameter.ParameterName = "@AnimalName";
+            // nameParameter.Value = this.GetName();
 
             SqlParameter genderParameter = new SqlParameter();
             genderParameter.ParameterName = "@AnimalGender";
@@ -151,6 +151,47 @@ namespace AnimalShelter
             {
                 conn.Close();
             }
+        }
+
+        public static Animal Find(int id)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM animal WHERE id = @AnimalId;", conn);
+            SqlParameter animalIdParameter = new SqlParameter();
+            animalIdParameter.ParameterName = "@AnimalId";
+            animalIdParameter.Value = id.ToString();
+            cmd.Parameters.Add(animalIdParameter);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            int foundAnimalId = 0;
+            string foundAnimalName = null;
+            string foundAnimalGender = null;
+            string foundAnimalDate = null;
+            string foundAnimalBreed = null;
+            int foundAnimalTypeId = 0;
+
+            while(rdr.Read())
+            {
+                foundAnimalId = rdr.GetInt32(0);
+                foundAnimalName = rdr.GetString(1);
+                foundAnimalGender = rdr.GetString(2);
+                foundAnimalDate = rdr.GetString(3);
+                foundAnimalBreed = rdr.GetString(4);
+                foundAnimalTypeId = rdr.GetInt32(5);
+            }
+            Animal foundAnimal = new Animal(foundAnimalName, foundAnimalGender, foundAnimalDate, foundAnimalBreed, foundAnimalTypeId, foundAnimalId);
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+            return foundAnimal;
         }
 
         public static void DeleteAll()
