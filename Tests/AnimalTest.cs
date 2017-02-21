@@ -82,6 +82,25 @@ namespace AnimalShelter
             Assert.Equal(testAnimal, foundAnimal);
         }
 
+        [Fact]
+        public void GetSortedBreedList_GetListSortedByBreed_true()
+        {
+            Animal firstAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
+            Animal secondAnimal = new Animal("wilma", "male", "2017-02-14", "great dane", 1);
+            Animal thirdAnimal = new Animal("betty", "female", "2017-08-28", "golden retriever", 1);
+            Animal fourthAnimal = new Animal("barney", "male", "2016-07-14", "pit bull", 1);
+            firstAnimal.Save();
+            secondAnimal.Save();
+            thirdAnimal.Save();
+            fourthAnimal.Save();
+
+            List<Animal> testAnimalList = new List<Animal> {thirdAnimal, secondAnimal, fourthAnimal, firstAnimal};
+            List<Animal> resultAnimalList = Animal.GetSortedBreedList();
+
+            Assert.Equal(testAnimalList, resultAnimalList);
+
+        }
+
         public void Dispose()
         {
             Animal.DeleteAll();
