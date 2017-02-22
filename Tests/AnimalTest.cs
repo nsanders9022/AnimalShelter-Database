@@ -118,6 +118,24 @@ namespace AnimalShelter
             Assert.Equal(testAnimalList, resultAnimalList);
         }
 
+        [Fact]
+        public void GetSortedTypeList_GetListSortedByDate_true()
+        {
+            Animal firstAnimal = new Animal("fred", "female", "2017-01-28", "pug", 1);
+            Animal secondAnimal = new Animal("wilma", "male", "2017-02-14", "great dane", 2);
+            Animal thirdAnimal = new Animal("betty", "female", "2017-08-28", "golden retriever", 4);
+            Animal fourthAnimal = new Animal("barney", "male", "2016-07-14", "pit bull", 3);
+            firstAnimal.Save();
+            secondAnimal.Save();
+            thirdAnimal.Save();
+            fourthAnimal.Save();
+
+            List<Animal> testAnimalList = new List<Animal> {fourthAnimal, firstAnimal, secondAnimal, thirdAnimal};
+            List<Animal> resultAnimalList = Animal.GetSortedDateList();
+
+            Assert.Equal(testAnimalList, resultAnimalList);
+        }
+
         public void Dispose()
         {
             Animal.DeleteAll();

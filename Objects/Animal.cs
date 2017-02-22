@@ -258,6 +258,37 @@ namespace AnimalShelter
             return AllAnimals;
         }
 
+        public static List<Animal> GetSortedDateList()
+        {
+            List<Animal> AllAnimals = new List<Animal>{};
+
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM animal ORDER BY date;", conn);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+                int animalId = rdr.GetInt32(0);
+                string animalName = rdr.GetString(1);
+                string animalGender = rdr.GetString(2);
+                string animalDate = rdr.GetString(3);
+                string animalBreed = rdr.GetString(4);
+                int animalTypeId = rdr.GetInt32(5);
+                Animal newAnimal = new Animal(animalName, animalGender, animalDate, animalBreed, animalTypeId, animalId);
+                AllAnimals.Add(newAnimal);
+            }
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+            return AllAnimals;
+        }
 
 
         public static void DeleteAll()
