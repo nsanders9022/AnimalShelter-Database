@@ -1,0 +1,25 @@
+<h2>Here are all the animals in this type (@Model["type"].GetName()):</h2>
+
+@if (@Model["animals"].Count == 0)
+{
+  <p>No animals have been added yet!</p>
+}
+else
+{
+  <ol>
+    @foreach (var animal in @Model["animals"])
+    {
+      <li>@animal.GetName(), @animal.GetDate()</li>
+
+    }
+  </ol>
+}
+
+/*<form action='/categories/@Model["type"].GetId()/animals/sortbybreed' method="post">
+  <button type="submit">Sort animals by breed</button>
+</form>
+<form action='/categories/@Model["type"].GetId()/animals/sortbydate' method="post">
+  <button type="submit">Sort animals by the day they came to the shelter</button>
+</form>*/
+<p><a href="/animals/new">Add a new animal</a></p>
+<p><a href="/">Return to Main Page</a></p>

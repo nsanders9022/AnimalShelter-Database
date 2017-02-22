@@ -27,14 +27,38 @@ namespace AnimalShelter
                 return View["types_form.cshtml"];
             };
 
-            Post["/types/{id}/animals/sort"] = parameters => {
-                Dictionary<string, object> model = new Dictionary<string, object>();
-                var SelectedType = Type.Find(parameters.id);
-                List<Animal> AllSortedTypeAnimals = SelectedType.GetSortedTypeAnimals();
-                model.Add("type", SelectedType);
-                model.Add("animals", AllSortedTypeAnimals);
-                return View["type.cshtml", model];
-            };
+            Post["/animals/sort"] = _ => {
+                        // List<Task> AllTasks = Task.GetAll();
+                        List<Animal> AllSortedAnimals = Animal.GetSortedDateList();
+                        return View["animals.cshtml", AllSortedAnimals];
+                    };
+
+            // Post["/types/{id}/animals/sortbytype"] = parameters => {
+            //     Dictionary<string, object> model = new Dictionary<string, object>();
+            //     var SelectedType = Type.Find(parameters.id);
+            //     List<Animal> AllSortedTypeAnimals = SelectedType.GetSortedTypeList();
+            //     model.Add("type", SelectedType);
+            //     model.Add("animals", AllSortedTypeAnimals);
+            //     return View["type.cshtml", model];
+            // };
+            //
+            // Post["/types/{id}/animals/sortbybreed"] = parameters => {
+            //     Dictionary<string, object> model = new Dictionary<string, object>();
+            //     var SelectedType = Type.Find(parameters.id);
+            //     List<Animal> AllSortedTypeAnimals = SelectedType.GetSortedTypeList();
+            //     model.Add("type", SelectedType);
+            //     model.Add("animals", AllSortedTypeAnimals);
+            //     return View["type.cshtml", model];
+            // };
+            //
+            // Post["/types/{id}/animals/sortbydate"] = parameters => {
+            //     Dictionary<string, object> model = new Dictionary<string, object>();
+            //     var SelectedType = Type.Find(parameters.id);
+            //     List<Animal> AllSortedTypeAnimals = SelectedType.GetSortedTypeList();
+            //     model.Add("type", SelectedType);
+            //     model.Add("animals", AllSortedTypeAnimals);
+            //     return View["type.cshtml", model];
+            // };
 
             Post["/types/new"] = _ => {
                 Type newType = new Type(Request.Form["type-name"]);
@@ -49,7 +73,7 @@ namespace AnimalShelter
             Post["/animals/new"] = _ => {
                 Animal newAnimal = new Animal(Request.Form["animal-name"], Request.Form["animal-gender"], Request.Form["animal-date"], Request.Form["animal-breed"], Request.Form["animal-type-id"]);
                 newAnimal.Save();
-                return View["success.cshtml"];
+                return View["success.cshtml", newAnimal];
             };
             Post["/animals/delete"] = _ => {
                 Animal.DeleteAll();
